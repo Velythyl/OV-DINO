@@ -1,0 +1,16 @@
+.git
+.github
+.pytest_cache
+__pycache__
+*.py[cod]
+datas
+inits/huggingface
+inits/ovdino
+inits/sam2
+inits/swin
+wkdrs
+*.pth
+*.pt
+*.ckpt
+*.log
+*.zip

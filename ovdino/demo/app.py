@@ -272,4 +272,8 @@ if __name__ == "__main__":
             inputs=None,
             outputs=[image, input_text, score_thr, json_results, with_segmentation],
         )
-        app.launch(show_error=True)
+        app.launch(
+            show_error=True,
+            server_name=os.getenv("GRADIO_SERVER_NAME", "127.0.0.1"),
+            server_port=int(os.getenv("GRADIO_SERVER_PORT", "7860")),
+        )
