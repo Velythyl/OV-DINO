@@ -153,6 +153,10 @@ docker run --rm --gpus all -p 7860:7860 \
   ov-dino
 ```
 
+Published images are available from GitHub Container Registry after the Docker
+workflow runs on `main`. Use `ghcr.io/velythyl/ov-dino:latest` as
+`OV_DINO_IMAGE` in projects that consume this image.
+
 The default command starts the Gradio demo at `http://localhost:7860`. It
 automatically uses a single `.pth` file found under the mounted directory. When
 there are multiple checkpoints, set `MODEL_CHECKPOINT` to the path in the
