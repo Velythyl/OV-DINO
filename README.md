@@ -139,6 +139,41 @@ python -m pip install -e detectron2-717ab9
 pip install -e ./
 ```
 
+### Docker
+
+The container image includes the CUDA 11.6 runtime and compiled OV-DINO
+extensions, but deliberately excludes model checkpoints. Download a checkpoint
+from [hao9610/OV-DINO](https://huggingface.co/hao9610/OV-DINO) into a local
+directory, then mount that directory at `/weights` when starting the container.
+
+```bash
+docker build -t ov-dino .
+docker run --rm --gpus all -p 7860:7860 \
+  -v "$(pwd)/weights:/weights:ro" \
+  ov-dino
+```
+
+The default command starts the Gradio demo at `http://localhost:7860`. It
+automatically uses a single `.pth` file found under the mounted directory. When
+there are multiple checkpoints, set `MODEL_CHECKPOINT` to the path in the
+container:
+
+```bash
+docker run --rm --gpus all -p 7860:7860 \
+  -e MODEL_CHECKPOINT=/weights/ovdino_swint_og-coco50.6_lvismv39.4_lvis32.2.pth \
+  -v "$(pwd)/weights:/weights:ro" \
+  ov-dino
+```
+
+Podman uses the same image and mount contract. Add `:Z` to the volume mount on
+SELinux hosts:
+
+```bash
+podman run --rm --device nvidia.com/gpu=all -p 7860:7860 \
+  -v "$(pwd)/weights:/weights:ro,Z" \
+  ov-dino
+```
+
 ### 2. Data Preparing
 #### COCO
 * Download [COCO](https://cocodataset.org/#download) from the official website, and put them on datas/coco folder.
